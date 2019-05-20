@@ -15,6 +15,7 @@
 @icon-pause-path: "icons/pause-button.svg";
 @icon-speaker-path: "icons/speaker-button.svg";
 @icon-expand-path: "icons/expand-button.svg";
+@icon-next-path: "icons/next-button.svg";
 
 /* ------------------- */
 /* CEICOM MUSIC PLAYER */
@@ -47,17 +48,29 @@
         text-align: center;
         padding: 20px;
     }
-    
+
     .btn {
         cursor: pointer;
         width: 15px;
         height: $width;
         border: 0;
         background: no-repeat center/15px transparent;
-        background-image: url(@icon-play-path);
+    
+        &.play-btn {
+            background-image: url(@icon-play-path);
+        }
+
+        &.next-btn {
+            margin-left: 15px;
+            background-image: url(@icon-next-path);
+        }
+        
+        &.disabled {
+            opacity: 0.5;
+        }
     }
     
-    &.playing .btn {
+    &.playing .play-btn {
         background-image: url(@icon-pause-path);
     } 
     

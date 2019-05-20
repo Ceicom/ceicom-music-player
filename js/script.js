@@ -7,19 +7,30 @@
             this._fakePlayer = $('.cmp-player');
             this._$playBtn = this._fakePlayer.find('.play-btn');
             this._$progressBar = this._fakePlayer.find('.progress-bar');
+            this._$nextBtn = this._fakePlayer.find('.next-btn');
             this._$time = this._fakePlayer.find('.time');
             this._$volumeWrapper = this._fakePlayer.find('.volume-wrapper');
             this._$volumeInput = this._fakePlayer.find('.volume-input');
             this._currentMusic = 0;
-            this._currentVolume = 1;
+            this._currentVolume = 0.1;
 
             this.init();
         }
 
         _createPlayer() {
+            const music = this._musics[this._currentMusic];
+
+            if (this._player) {
+                this._$nextBtn.toggleClass('disabled', music.typemedia === 'comercial' || music.typemedia === 'vinheta');
+                this._player.setAttribute('src', music.mp3);
+                this._player.load();
+                this._player.play();
+                return;
+            }
+
             const audio = document.createElement('audio');
 
-            audio.src = this._musics[this._currentMusic].mp3;
+            audio.src = music.mp3;
             audio.preload = 'none';
             audio.volume = this._currentVolume;
 
@@ -81,6 +92,11 @@
 
         _initFakePlayerActions() {
             this._$playBtn.on('click', () => this._isPlaying() ? this._player.pause() : this._player.play());
+
+            this._$nextBtn.on('click', () => {
+                if (this._$nextBtn.hasClass('disabled')) return;
+                this._musicEnded();
+            });
 
             this._$volumeWrapper.on('click', e => {
                 if (!$(e.target).hasClass('volume-wrapper')) return;

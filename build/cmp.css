@@ -39,9 +39,18 @@
   height: 15px;
   border: 0;
   background: no-repeat center / 15px transparent;
+}
+.cmp-player .btn.play-btn {
   background-image: url("icons/play-button.svg");
 }
-.cmp-player.playing .btn {
+.cmp-player .btn.next-btn {
+  margin-left: 15px;
+  background-image: url("icons/next-button.svg");
+}
+.cmp-player .btn.disabled {
+  opacity: 0.5;
+}
+.cmp-player.playing .play-btn {
   background-image: url("icons/pause-button.svg");
 }
 .cmp-player .time {
