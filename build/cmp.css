@@ -33,21 +33,21 @@
   text-align: center;
   padding: 20px;
 }
-.cmp-player .btn {
+.cmp-player .cmp-btn {
   cursor: pointer;
   width: 15px;
   height: 15px;
   border: 0;
   background: no-repeat center / 15px transparent;
 }
-.cmp-player .btn.play-btn {
+.cmp-player .cmp-btn.play-btn {
   background-image: url("icons/play-button.svg");
 }
-.cmp-player .btn.next-btn {
+.cmp-player .cmp-btn.next-btn {
   margin-left: 15px;
   background-image: url("icons/next-button.svg");
 }
-.cmp-player .btn.disabled {
+.cmp-player .cmp-btn.disabled {
   opacity: 0.5;
 }
 .cmp-player.playing .play-btn {

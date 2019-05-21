@@ -12,7 +12,7 @@
             this._$volumeWrapper = this._fakePlayer.find('.volume-wrapper');
             this._$volumeInput = this._fakePlayer.find('.volume-input');
             this._currentMusic = 0;
-            this._currentVolume = 0.1;
+            this._currentVolume = 1;
 
             this.init();
         }
@@ -28,13 +28,12 @@
                 return;
             }
 
-            const audio = document.createElement('audio');
-
-            audio.src = music.mp3;
-            audio.preload = 'none';
+            const audio = new Audio(music.mp3);
+            audio.preload = 'auto';
             audio.volume = this._currentVolume;
 
             this._player = audio;
+            this._initPlayerListeners();
         }
 
         _musicEnded(error = false) {
@@ -63,7 +62,7 @@
 
             $(this._player).on('ended', () => this._musicEnded());
 
-            $(this._player).on('loadstart', () => {
+            $(this._player).on('canplay', () => {
                 const playPromise = this._player.play();
                 if (playPromise !== null) playPromise.catch(() => this._makePlayer());
             });
@@ -80,14 +79,7 @@
                 return;
             }
 
-            $(this._player).off('timeupdate');
-            $(this._player).off('play pause');
-            $(this._player).off('ended');
-            $(this._player).off('canplaythrough');
-
             this._createPlayer();
-
-            this._initPlayerListeners();
         }
 
         _initFakePlayerActions() {

@@ -24,7 +24,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       this._$volumeWrapper = this._fakePlayer.find('.volume-wrapper');
       this._$volumeInput = this._fakePlayer.find('.volume-input');
       this._currentMusic = 0;
-      this._currentVolume = 0.1;
+      this._currentVolume = 1;
       this.init();
     }
 
@@ -45,11 +45,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           return;
         }
 
-        var audio = document.createElement('audio');
-        audio.src = music.mp3;
-        audio.preload = 'none';
+        var audio = new Audio(music.mp3);
+        audio.preload = 'auto';
         audio.volume = this._currentVolume;
         this._player = audio;
+
+        this._initPlayerListeners();
       }
     }, {
       key: "_musicEnded",
@@ -82,7 +83,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         $(this._player).on('ended', function () {
           return _this._musicEnded();
         });
-        $(this._player).on('loadstart', function () {
+        $(this._player).on('canplay', function () {
           var playPromise = _this._player.play();
 
           if (playPromise !== null) playPromise["catch"](function () {
@@ -103,14 +104,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           return;
         }
 
-        $(this._player).off('timeupdate');
-        $(this._player).off('play pause');
-        $(this._player).off('ended');
-        $(this._player).off('canplaythrough');
-
         this._createPlayer();
-
-        this._initPlayerListeners();
       }
     }, {
       key: "_initFakePlayerActions",
