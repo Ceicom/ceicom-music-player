@@ -196,6 +196,34 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         this._$volumeInput.val(value * 10);
       }
+    }, {
+      key: "destroy",
+      value: function destroy() {
+        this._player.currentTime = 0;
+
+        this._player.pause(); // window events
+
+
+        $(window).off('offline');
+        $(window).off('online'); // player events
+
+        $(this._player).off('timeupdate');
+        $(this._player).off('play pause');
+        $(this._player).off('ended');
+        $(this._player).off('canplay');
+        $(this._player).off('error'); // ui player buttons events
+
+        this._$playBtn.off('click');
+
+        this._$nextBtn.off('click');
+
+        this._$volumeWrapper.off('click');
+
+        this._$volumeInput.off('input');
+
+        delete this._player;
+        delete this._musics;
+      }
     }]);
 
     return CeicomMusicPlayer;
